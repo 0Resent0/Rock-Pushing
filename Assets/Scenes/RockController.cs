@@ -4,12 +4,12 @@ using UnityEngine.UI;
 public class RockController : MonoBehaviour
 {
     [Header("Movement")]
-    public float forwardSpeed = 5f;
+    public float moveSpeed = 5f;         // Forward movement speed
 
     [Header("Balance Settings")]
-    public float tiltAmount = 30f;  // how strongly mouse movement adds to tilt
-    public float maxTilt = 45f;
-    public float smoothSpeed = 5f;
+    public float maxTilt = 45f;          // Max tilt before Game Over
+    public float smoothSpeed = 5f;       // Tilt smoothing speed
+    public float mouseTiltPower = 30f;   // How strongly mouse movement affects tilt
 
     [Header("Instability")]
     public float randomForce = 20f;
@@ -29,11 +29,13 @@ public class RockController : MonoBehaviour
     {
         if (isGameOver) return;
 
-        // Start forward movement when W pressed
+        // Start moving forward when W pressed
         if (Input.GetKey(KeyCode.W))
         {
             started = true;
-            transform.Translate(Vector3.forward * forwardSpeed * Time.deltaTime, Space.World);
+
+            // Forward movement
+            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime, Space.World);
 
             // Add smooth random instability
             float randomTilt = Mathf.PerlinNoise(Time.time * randomSpeed, 0f) - 0.5f;
@@ -53,11 +55,8 @@ public class RockController : MonoBehaviour
         // Mouse movement adds to tilt
         if (started)
         {
-            // Get mouse movement delta (frame-to-frame)
             float mouseDelta = Input.GetAxis("Mouse X");
-
-            // Add the movement effect to tilt
-            targetTilt += -mouseDelta * tiltAmount * Time.deltaTime;
+            targetTilt += -mouseDelta * mouseTiltPower * Time.deltaTime;
         }
 
         // Smooth tilt visually
