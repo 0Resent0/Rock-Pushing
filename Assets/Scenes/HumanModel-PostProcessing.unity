@@ -763,8 +763,9 @@ GameObject:
   - component: {fileID: 1260852074}
   - component: {fileID: 1260852073}
   - component: {fileID: 1260852072}
+  - component: {fileID: 1260852076}
   m_Layer: 3
-  m_Name: Sphere
+  m_Name: Rock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -856,6 +857,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 906783596}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1260852076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260852071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c4dd059a3d4d8147914c30a5e0e3db9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  maxTilt: 45
+  smoothSpeed: 5
+  pullForce: 12
+  switchTime: 2
+  aggression: 1.5
+  randomForce: 20
+  randomSpeed: 2
+  spikeChance: 0.03
+  driftForce: 3
+  mouseTiltPower: 30
+  controlPower: 80
+  edgeMultiplier: 2
+  rockRestore: 0
+  tiltIndicatorImage: {fileID: 0}
+  colorChangePercent: 0.8
 --- !u!1001 &1336870417
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1464,6 +1493,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d9cd8eb4a074cd84ab2686c58bcf21d9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1429346682}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d9cd8eb4a074cd84ab2686c58bcf21d9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1429346684}
   m_SourcePrefab: {fileID: 100100000, guid: d9cd8eb4a074cd84ab2686c58bcf21d9, type: 3}
 --- !u!4 &1429346680 stripped
 Transform:
@@ -1487,6 +1519,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ceb8272349af144b26ac8c8b16b540, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1429346684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429346681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1a18d2b7414c62439e8e3a4e34653e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rock: {fileID: 1260852075}
+  followOffset: {x: 0, y: 1, z: -2}
+  followSpeed: 5
+  rotateSpeed: 10
+  animator: {fileID: 0}
 --- !u!1001 &1576226471
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1568,6 +1617,7 @@ GameObject:
   - component: {fileID: 1789768736}
   - component: {fileID: 1789768735}
   - component: {fileID: 1789768738}
+  - component: {fileID: 1789768739}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1642,13 +1692,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1789768734}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.24099582, y: -0, z: -0, w: 0.9705262}
+  m_LocalRotation: {x: 0.23344536, y: 0, z: 0, w: 0.97236997}
   m_LocalPosition: {x: 0, y: 2.472, z: -0.69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 27.891, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 27, y: 0, z: 0}
 --- !u!114 &1789768738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1709,6 +1759,20 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &1789768739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1789768734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ebe976f2fd3f064d9084efca29a1ca7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1260852071}
+  offset: {x: 0, y: 0, z: 0}
 --- !u!1001 &1824796036
 PrefabInstance:
   m_ObjectHideFlags: 0
