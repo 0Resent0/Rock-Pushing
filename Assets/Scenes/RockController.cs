@@ -3,80 +3,104 @@ using UnityEngine.UI;
 
 public class RockController : MonoBehaviour
 {
-    [Header("Movement")]
-    public float moveSpeed = 5f;         // Forward movement speed
+    [Header("Balance")]
+    public float maxTilt = 45f;
+    public float smoothSpeed = 5f;
 
-    [Header("Balance Settings")]
-    public float maxTilt = 45f;          // Max tilt before Game Over
-    public float smoothSpeed = 5f;       // Tilt smoothing speed
-    public float mouseTiltPower = 30f;   // How strongly mouse movement affects tilt
+    [Header("Rock Behavior (Tries to Lose)")]
+    public float pullForce = 12f;
+    public float switchTime = 2f;
+    public float aggression = 1.5f;
+    public float spikeChance = 0.02f;
 
-    [Header("Instability")]
-    public float randomForce = 20f;
-    public float randomSpeed = 2f;
-    public float spikeChance = 0.03f;
-    public float driftForce = 3f;
+    [Header("Control (Player Power)")]
+    public float controlPower = 80f;
+    public float edgeMultiplier = 2f;
+
+    [Header("Recovery")]
+    public float rockRestore = 0.5f;
 
     [Header("UI")]
     public RectTransform tiltIndicatorImage;
 
     private float tilt = 0f;
     private float targetTilt = 0f;
+    private float loseDirection = 1f;
+    private float switchTimer;
+
     private bool isGameOver = false;
-    private bool started = false;
+
+    void Start()
+    {
+        switchTimer = switchTime;
+        loseDirection = Random.value > 0.5f ? 1f : -1f;
+    }
 
     void Update()
     {
         if (isGameOver) return;
 
-        // Start moving forward when W pressed
-        if (Input.GetKey(KeyCode.W))
+        // If NOT holding W → do nothing except optional restore
+        if (!Input.GetKey(KeyCode.W))
         {
-            started = true;
+            if (rockRestore > 0f)
+                targetTilt = Mathf.Lerp(targetTilt, 0f, rockRestore * Time.deltaTime);
 
-            // Forward movement
-            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime, Space.World);
-
-            // Add smooth random instability
-            float randomTilt = Mathf.PerlinNoise(Time.time * randomSpeed, 0f) - 0.5f;
-            targetTilt += randomTilt * randomForce * Time.deltaTime;
-
-            // Sudden spikes
-            if (Random.value < spikeChance)
-            {
-                float spike = Random.Range(-1f, 1f) * randomForce * 2f;
-                targetTilt += spike;
-            }
-
-            // Constant drift
-            targetTilt += driftForce * Time.deltaTime;
+            tilt = Mathf.Lerp(tilt, targetTilt, smoothSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Euler(0, 0, tilt);
+            UpdateTiltIndicator();
+            return;
         }
 
-        // Mouse movement adds to tilt
-        if (started)
+        // Switch direction
+        switchTimer -= Time.deltaTime;
+        if (switchTimer <= 0f)
         {
-            float mouseDelta = Input.GetAxis("Mouse X");
-            targetTilt += -mouseDelta * mouseTiltPower * Time.deltaTime;
+            loseDirection *= -1f;
+            switchTimer = switchTime;
         }
 
-        // Smooth tilt visually
+        // Rock tries to fall
+        float edgeFactor = Mathf.InverseLerp(0, maxTilt, Mathf.Abs(tilt));
+        float force = pullForce * (1f + edgeFactor * aggression);
+        targetTilt += loseDirection * force * Time.deltaTime;
+
+        // Spike
+        if (Random.value < spikeChance)
+            targetTilt += loseDirection * force * 1.5f;
+
+        // Anti-recovery
+        targetTilt += tilt * 0.2f * Time.deltaTime;
+
+        // ✅ PLAYER MOUSE CONTROL (restored)
+        float input = Input.GetAxis("Mouse X");
+        float control = controlPower * (1f + edgeFactor * edgeMultiplier);
+        targetTilt += -input * control * Time.deltaTime;
+
+        // Recovery (ONLY if value > 0)
+        if (rockRestore > 0f)
+            targetTilt = Mathf.Lerp(targetTilt, 0f, rockRestore * Time.deltaTime);
+
+        // Clamp
+        targetTilt = Mathf.Clamp(targetTilt, -maxTilt * 1.3f, maxTilt * 1.3f);
+
+        // Smooth
         tilt = Mathf.Lerp(tilt, targetTilt, smoothSpeed * Time.deltaTime);
         transform.rotation = Quaternion.Euler(0, 0, tilt);
 
-        // Check Game Over
         if (Mathf.Abs(tilt) >= maxTilt)
-        {
             GameOver();
-        }
 
-        // Update tilt indicator UI
         UpdateTiltIndicator();
     }
 
     void UpdateTiltIndicator()
     {
         if (!tiltIndicatorImage) return;
+
         tiltIndicatorImage.localRotation = Quaternion.Euler(0, 0, tilt);
+        tiltIndicatorImage.localScale =
+            Mathf.Abs(tilt) > maxTilt * 0.7f ? Vector3.one * 1.2f : Vector3.one;
     }
 
     void GameOver()
