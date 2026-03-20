@@ -907,8 +907,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c4dd059a3d4d8147914c30a5e0e3db9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  easyMode: 1
-  moveSpeed: 2
+  easyMode: 0
+  moveSpeed: 1
   maxTilt: 45
   smoothSpeed: 5
   mouseTiltPower: 30
@@ -916,11 +916,11 @@ MonoBehaviour:
   pullForce: 12
   switchTime: 2
   aggression: 1.5
-  randomForce: 20
+  randomForce: 10
   randomSpeed: 2
   spikeChance: 0.01
   driftForce: 3
-  rockRestore: 0
+  rockRestore: 100
   tiltIndicatorImage: {fileID: 1250529368}
   colorChangePercent: 0.8
 --- !u!1001 &1274941377
