@@ -24124,30 +24124,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c4dd059a3d4d8147914c30a5e0e3db9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
-  moveSpeed: 5
-  maxTilt: 45
-  smoothSpeed: 5
-  mouseTiltPower: 30
-  easyMode: 0
-  nightmareMode: 0
-=======
   forwardSpeed: 5
   tiltAmount: 20
   maxTilt: 45
   smoothSpeed: 5
->>>>>>> parent of 7618085 (Marge)
   randomForce: 35
   randomSpeed: 2
   spikeChance: 0.03
   driftForce: 3
   tiltIndicatorImage: {fileID: 793729174}
-<<<<<<< HEAD
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
-  warningColor: {r: 1, g: 0, b: 0, a: 1}
-  warningThreshold: 0.65
-=======
->>>>>>> parent of 7618085 (Marge)
 --- !u!1001 &685165740
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -62522,7 +62507,7 @@ Transform:
   m_GameObject: {fileID: 1795766446}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -273.7, y: 285.41507, z: 360.38336}
+  m_LocalPosition: {x: -278.59802, y: 285.41507, z: 360.38336}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -63128,7 +63113,7 @@ Transform:
   m_GameObject: {fileID: 1812027709}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.7, y: 0.82977694, z: 2.3400826}
+  m_LocalPosition: {x: -20.2, y: 0.82977694, z: 2.3400826}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
