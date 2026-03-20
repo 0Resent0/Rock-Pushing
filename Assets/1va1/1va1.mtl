@@ -1,0 +1,91 @@
+# Exported from Nomad Sculpt
+
+newmtl Box
+ map_Kd Box_color.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Box_2
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Box_1
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Box_3
+ map_Kd IMG_4391.jpeg
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Box_4
+ map_Kd Box_4_color.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Box_3_1
+ map_Ke Box_3_emissive.png
+ Kd 1.000000 1.000000 1.000000
+ Ke 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Box_5
+ map_Kd Box_5_color.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Box_6
+ map_Ke Box_6_emissive.png
+ Kd 1.000000 1.000000 1.000000
+ Ke 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Box_6_1
+ map_Ke Box_6_emissive_1.png
+ Kd 1.000000 1.000000 1.000000
+ Ke 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Box_6_2
+ map_Ke Box_6_emissive_2.png
+ Kd 1.000000 1.000000 1.000000
+ Ke 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Box_6_3
+ map_Ke Box_6_emissive_3.png
+ Kd 1.000000 1.000000 1.000000
+ Ke 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Box_6_4
+ map_Ke Box_6_emissive_4.png
+ Kd 1.000000 1.000000 1.000000
+ Ke 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Cylinder
+ map_Ke Cylinder_emissive.png
+ Kd 1.000000 1.000000 1.000000
+ Ke 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Cylinder_1
+ map_Ke Cylinder_emissive_1.png
+ Kd 1.000000 1.000000 1.000000
+ Ke 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
