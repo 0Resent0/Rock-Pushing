@@ -24124,15 +24124,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c4dd059a3d4d8147914c30a5e0e3db9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forwardSpeed: 5
-  tiltAmount: 20
-  maxTilt: 45
+  moveSpeed: 5
+  maxTilt: 55
   smoothSpeed: 5
+  mouseTiltPower: 30
+  easyMode: 1
+  nightmareMode: 0
   randomForce: 35
   randomSpeed: 2
-  spikeChance: 0.03
+  spikeChance: 0.05
   driftForce: 3
+  autoRecover: 0
   tiltIndicatorImage: {fileID: 793729174}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  warningColor: {r: 1, g: 0, b: 0, a: 1}
+  warningThreshold: 0.8
 --- !u!1001 &685165740
 PrefabInstance:
   m_ObjectHideFlags: 0
