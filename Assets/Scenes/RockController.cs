@@ -4,11 +4,12 @@ using UnityEngine.UI;
 public class RockController : MonoBehaviour
 {
     [Header("Settings")]
-    public bool easyMode = true;
+    public bool keyboardMode = true;   // ✅ renamed
+    public bool fatigueMode = true;    // ✅ NEW toggle
 
     [Header("Movement")]
     public float moveSpeed = 5f;
-    public float rollSpeed = 200f; // ✅ NEW (how fast the rock rolls)
+    public float rollSpeed = 200f;
 
     [Header("Balance Settings")]
     public float maxTilt = 45f;
@@ -37,6 +38,21 @@ public class RockController : MonoBehaviour
     [Range(0f, 1f)]
     public float colorChangePercent = 0.8f;
 
+    [Header("Advanced Control")]
+
+    [Header("Fatigue")]
+    public float fatigueIncrease = 2f;
+    public float fatigueRecovery = 1f;
+    public float maxFatigue = 1f;
+
+    [Header("Input Weight")]
+    public float inputSmoothTime = 0.15f;
+
+    private float fatigue = 0f;
+    private float currentInput = 0f;
+    private float inputVelocity = 0f;
+    private float lastRawInput = 0f;
+
     private float tilt = 0f;
     private float targetTilt = 0f;
     private float loseDirection = 1f;
@@ -55,15 +71,63 @@ public class RockController : MonoBehaviour
 
         bool moving = Input.GetKey(KeyCode.Space);
 
+        // =========================
+        // 🎮 INPUT SYSTEM
+        // =========================
+
+        float rawInput = 0f;
+
+        if (keyboardMode) // ✅ renamed usage
+        {
+            if (Input.GetKey(KeyCode.Q)) rawInput = 1f;
+            else if (Input.GetKey(KeyCode.P)) rawInput = -1f;
+        }
+        else
+        {
+            rawInput = Input.GetAxis("Mouse X");
+        }
+
+        // =========================
+        // 🧠 FATIGUE SYSTEM (toggleable)
+        // =========================
+
+        if (fatigueMode)
+        {
+            // Detect spam
+            if (Mathf.Sign(rawInput) != Mathf.Sign(lastRawInput) && Mathf.Abs(rawInput) > 0.5f)
+            {
+                fatigue += fatigueIncrease * Time.deltaTime;
+            }
+
+            // Recover fatigue
+            fatigue -= fatigueRecovery * Time.deltaTime;
+            fatigue = Mathf.Clamp(fatigue, 0f, maxFatigue);
+        }
+        else
+        {
+            fatigue = 0f; // no fatigue if disabled
+        }
+
+        lastRawInput = rawInput;
+
+        // =========================
+        // 🪨 INPUT WEIGHT
+        // =========================
+
+        currentInput = Mathf.SmoothDamp(currentInput, rawInput, ref inputVelocity, inputSmoothTime);
+
+        float fatigueMultiplier = 1f - fatigue;
+        float finalInput = currentInput * fatigueMultiplier;
+
+        // =========================
+        // 🪨 MOVEMENT + ROCK LOGIC
+        // =========================
+
         if (moving)
         {
-            // ✅ Move forward
             transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime, Space.World);
-
-            // ✅ Roll the rock
             transform.Rotate(Vector3.right, rollSpeed * Time.deltaTime);
 
-            // Tilt logic
             switchTimer -= Time.deltaTime;
             if (switchTimer <= 0f)
             {
@@ -93,27 +157,22 @@ public class RockController : MonoBehaviour
             targetTilt = Mathf.Lerp(targetTilt, 0f, rockRestore * Time.deltaTime);
         }
 
-        // Player control
-        float input = 0f;
-        if (easyMode)
-        {
-            if (Input.GetKey(KeyCode.Q)) input = 1f;
-            else if (Input.GetKey(KeyCode.P)) input = -1f;
-        }
-        else
-        {
-            input = Input.GetAxis("Mouse X");
-        }
+        // =========================
+        // 🎯 APPLY CONTROL
+        // =========================
 
-        float controlPower = easyMode ? keyTiltPower : mouseTiltPower;
+        float controlPower = keyboardMode ? keyTiltPower : mouseTiltPower;
         float edgeFactorPlayer = Mathf.InverseLerp(0, maxTilt, Mathf.Abs(tilt));
-        targetTilt += -input * controlPower * (1f + edgeFactorPlayer) * Time.deltaTime;
 
-        // Apply tilt (Z axis)
+        targetTilt += -finalInput * controlPower * (1f + edgeFactorPlayer) * Time.deltaTime;
+
+        // =========================
+        // 🎯 APPLY ROTATION
+        // =========================
+
         targetTilt = Mathf.Clamp(targetTilt, -maxTilt * 1.3f, maxTilt * 1.3f);
         tilt = Mathf.Lerp(tilt, targetTilt, smoothSpeed * Time.deltaTime);
 
-        // ✅ Combine tilt + rolling rotation
         transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, tilt);
 
         if (Mathf.Abs(tilt) >= maxTilt)
@@ -137,7 +196,7 @@ public class RockController : MonoBehaviour
     }
 
     void GameOver()
-    { ///FIx
+    {
         isGameOver = true;
         Debug.Log("Game Over!");
     }
