@@ -9,7 +9,6 @@ public class RockController : MonoBehaviour
     [Header("Balance Settings")]
     public float maxTilt = 45f;
     public float smoothSpeed = 5f;
-    public float mouseTiltPower = 30f;
 
     [Header("Rock Behavior")]
     public float pullForce = 12f;
@@ -23,6 +22,7 @@ public class RockController : MonoBehaviour
     public float driftForce = 3f;
 
     [Header("Player Control")]
+    public float mouseTiltPower = 30f;
     public float controlPower = 80f;
     public float edgeMultiplier = 2f;
 
@@ -31,6 +31,10 @@ public class RockController : MonoBehaviour
 
     [Header("UI")]
     public RectTransform tiltIndicatorImage;
+
+    [Header("Tilt Indicator Settings")]
+    [Range(0f, 1f)]
+    public float colorChangePercent = 0.8f; // Threshold % for changing color
 
     private float tilt = 0f;
     private float targetTilt = 0f;
@@ -54,10 +58,9 @@ public class RockController : MonoBehaviour
         {
             started = true;
 
-            // Forward movement
             transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime, Space.World);
 
-            // Rock tries to fall (HEAD behavior)
+            // Rock tries to fall
             switchTimer -= Time.deltaTime;
             if (switchTimer <= 0f)
             {
@@ -69,44 +72,34 @@ public class RockController : MonoBehaviour
             float force = pullForce * (1f + edgeFactor * aggression);
             targetTilt += loseDirection * force * Time.deltaTime;
 
-            // Spike
             if (Random.value < spikeChance)
                 targetTilt += loseDirection * force * 1.5f;
 
-            // Anti-recovery
             targetTilt += tilt * 0.2f * Time.deltaTime;
 
-            // Add smooth random instability (Parent behavior)
             float randomTilt = Mathf.PerlinNoise(Time.time * randomSpeed, 0f) - 0.5f;
             targetTilt += randomTilt * randomForce * Time.deltaTime;
 
-            // Sudden spikes
             if (Random.value < spikeChance)
                 targetTilt += Random.Range(-1f, 1f) * randomForce * 2f;
 
-            // Constant drift
             targetTilt += driftForce * Time.deltaTime;
 
-            // Mouse control
             float mouseDelta = Input.GetAxis("Mouse X");
             targetTilt += -mouseDelta * controlPower * (1f + edgeFactor * edgeMultiplier) * Time.deltaTime;
 
-            // Recovery
             if (rockRestore > 0f)
                 targetTilt = Mathf.Lerp(targetTilt, 0f, rockRestore * Time.deltaTime);
         }
         else if (rockRestore > 0f)
         {
-            // Restore tilt when W not held
             targetTilt = Mathf.Lerp(targetTilt, 0f, rockRestore * Time.deltaTime);
         }
 
-        // Clamp and smooth tilt
         targetTilt = Mathf.Clamp(targetTilt, -maxTilt * 1.3f, maxTilt * 1.3f);
         tilt = Mathf.Lerp(tilt, targetTilt, smoothSpeed * Time.deltaTime);
         transform.rotation = Quaternion.Euler(0, 0, tilt);
 
-        // Check Game Over
         if (Mathf.Abs(tilt) >= maxTilt)
             GameOver();
 
@@ -116,8 +109,16 @@ public class RockController : MonoBehaviour
     void UpdateTiltIndicator()
     {
         if (!tiltIndicatorImage) return;
+
         tiltIndicatorImage.localRotation = Quaternion.Euler(0, 0, tilt);
         tiltIndicatorImage.localScale = Mathf.Abs(tilt) > maxTilt * 0.7f ? Vector3.one * 1.2f : Vector3.one;
+
+        Image indicatorImage = tiltIndicatorImage.GetComponent<Image>();
+        if (indicatorImage)
+        {
+            float tiltPercent = Mathf.Abs(tilt) / maxTilt;
+            indicatorImage.color = tiltPercent > colorChangePercent ? Color.red : Color.white;
+        }
     }
 
     void GameOver()

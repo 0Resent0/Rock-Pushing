@@ -3,21 +3,23 @@ using UnityEngine;
 public class RockFollower : MonoBehaviour
 {
     [Header("Target Settings")]
-    public Transform rock;          // Assign your rock here
-    public float followDistance = 2f;  // How far behind the rock
-    public float followSpeed = 5f;     // How quickly it follows
-    public float rotateSpeed = 10f;    // How smoothly it rotates
+    public Transform rock;               // Assign your rock here
+    public Vector3 followOffset = new Vector3(0f, 1f, -2f); // X, Y, Z offset from rock
+    public float followSpeed = 5f;       // How quickly it follows
+    public float rotateSpeed = 10f;      // How smoothly it rotates
 
     [Header("Animator")]
-    public Animator animator;       // Assign your model's Animator
+    public Animator animator;            // Assign your model's Animator
 
     void Update()
     {
         if (!rock) return;
 
-        // Target position behind the rock
-        Vector3 targetPos = rock.position - rock.forward * followDistance;
-        targetPos.y = transform.position.y; // keep height constant
+        // Compute target position using configurable offset
+        Vector3 targetPos = rock.position
+                          + rock.right * followOffset.x
+                          + Vector3.up * followOffset.y
+                          + rock.forward * followOffset.z;
 
         // Smooth position follow
         transform.position = Vector3.Lerp(transform.position, targetPos, followSpeed * Time.deltaTime);
