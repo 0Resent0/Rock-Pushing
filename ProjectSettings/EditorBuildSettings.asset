@@ -6,24 +6,33 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Mainmenu.unity
+    path: Assets/Asset/Scene/Menu/Mainmenu.unity
     guid: c7a540fcac102234a9f14fc263042379
   - enabled: 1
-    path: Assets/Scenes/Map 1.unity
+    path: Assets/Asset/Scene/Game/Map 1.unity
     guid: 42184561fd291404995dc90b90184022
   - enabled: 1
-    path: Assets/Scenes/Map 2.unity
+    path: Assets/Asset/Scene/Game/Map 2.unity
     guid: 72e51453962b9eb4db152879c308a0be
   - enabled: 1
-    path: Assets/Scenes/Map 3.unity
+    path: Assets/Asset/Scene/Game/Map 3.unity
     guid: 62cc7179bf9e05e43a2c3c01cb345a5d
   - enabled: 1
-    path: Assets/Scenes/Gameover.unity
-    guid: a0141dbce9784ff498ffbca217870136
-  - enabled: 1
-    path: Assets/Scenes/Ads 1.unity
+    path: Assets/Asset/Scene/Ads/Ads 1.unity
     guid: c9093dc81841b3c4f896b40a38f7eaa8
   - enabled: 1
-    path: Assets/Scenes/Ads 2.unity
+    path: Assets/Asset/Scene/Ads/Ads 2.unity
     guid: ac4c98dd02b45784e8b6bf6f467ccc41
+  - enabled: 1
+    path: Assets/Asset/Scene/Menu/Chapter.unity
+    guid: 414a73ce50e84fb4493fbcfc55124420
+  - enabled: 1
+    path: Assets/Asset/Scene/Menu/Gameover.unity
+    guid: f0adb554b19f579428e8f7d9188c4bfa
+  - enabled: 1
+    path: Assets/Asset/Scene/Menu/Setting.unity
+    guid: 20e3d4ef7db822646ae21484a7a0d407
+  - enabled: 1
+    path: Assets/Asset/Scene/Menu/Upgrade.unity
+    guid: 6c2c31fd282565044afa388318de0f4e
   m_configObjects: {}
