@@ -54,9 +54,10 @@ public class RockController : MonoBehaviour
     {
         if (isGameOver) return;
 
-        bool moving = Input.GetKey(KeyCode.W);
+        // ✅ Changed from W → Space
+        bool moving = Input.GetKey(KeyCode.Space);
 
-        // Move forward if W pressed
+        // Move forward if Space is pressed
         if (moving)
         {
             transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime, Space.World);
@@ -93,7 +94,7 @@ public class RockController : MonoBehaviour
             targetTilt = Mathf.Lerp(targetTilt, 0f, rockRestore * Time.deltaTime);
         }
 
-        // ✅ Player control always works
+        // Player control always works
         float input = 0f;
         if (easyMode)
         {
@@ -137,8 +138,7 @@ public class RockController : MonoBehaviour
     }
 
     void GameOver()
-    { ///Test Fix
-
+    {
         isGameOver = true;
         Debug.Log("Game Over!");
     }
