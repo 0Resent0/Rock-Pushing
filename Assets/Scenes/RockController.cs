@@ -4,10 +4,11 @@ using UnityEngine.UI;
 public class RockController : MonoBehaviour
 {
     [Header("Settings")]
-    public bool easyMode = true; // true = Q/P keys, false = mouse X axis
+    public bool easyMode = true;
 
     [Header("Movement")]
-    public float moveSpeed = 5f; // forward movement speed
+    public float moveSpeed = 5f;
+    public float rollSpeed = 200f; // ✅ NEW (how fast the rock rolls)
 
     [Header("Balance Settings")]
     public float maxTilt = 45f;
@@ -34,7 +35,7 @@ public class RockController : MonoBehaviour
 
     [Header("Tilt Indicator Settings")]
     [Range(0f, 1f)]
-    public float colorChangePercent = 0.8f; // Threshold % for changing color
+    public float colorChangePercent = 0.8f;
 
     private float tilt = 0f;
     private float targetTilt = 0f;
@@ -46,23 +47,23 @@ public class RockController : MonoBehaviour
     {
         switchTimer = switchTime;
         loseDirection = Random.value > 0.5f ? 1f : -1f;
-        tilt = 0f;
-        targetTilt = 0f;
     }
 
     void Update()
     {
         if (isGameOver) return;
 
-        // ✅ Changed from W → Space
         bool moving = Input.GetKey(KeyCode.Space);
 
-        // Move forward if Space is pressed
         if (moving)
         {
+            // ✅ Move forward
             transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime, Space.World);
 
-            // Automatic tilt logic (only while moving)
+            // ✅ Roll the rock
+            transform.Rotate(Vector3.right, rollSpeed * Time.deltaTime);
+
+            // Tilt logic
             switchTimer -= Time.deltaTime;
             if (switchTimer <= 0f)
             {
@@ -87,14 +88,12 @@ public class RockController : MonoBehaviour
 
             targetTilt += driftForce * Time.deltaTime;
         }
-
-        // Smooth return to upright when not moving
-        if (!moving && rockRestore > 0f)
+        else
         {
             targetTilt = Mathf.Lerp(targetTilt, 0f, rockRestore * Time.deltaTime);
         }
 
-        // Player control always works
+        // Player control
         float input = 0f;
         if (easyMode)
         {
@@ -110,12 +109,13 @@ public class RockController : MonoBehaviour
         float edgeFactorPlayer = Mathf.InverseLerp(0, maxTilt, Mathf.Abs(tilt));
         targetTilt += -input * controlPower * (1f + edgeFactorPlayer) * Time.deltaTime;
 
-        // Clamp and smooth tilt
+        // Apply tilt (Z axis)
         targetTilt = Mathf.Clamp(targetTilt, -maxTilt * 1.3f, maxTilt * 1.3f);
         tilt = Mathf.Lerp(tilt, targetTilt, smoothSpeed * Time.deltaTime);
-        transform.rotation = Quaternion.Euler(0, 0, tilt);
 
-        // Game Over check
+        // ✅ Combine tilt + rolling rotation
+        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, tilt);
+
         if (Mathf.Abs(tilt) >= maxTilt)
             GameOver();
 
@@ -127,7 +127,6 @@ public class RockController : MonoBehaviour
         if (!tiltIndicatorImage) return;
 
         tiltIndicatorImage.localRotation = Quaternion.Euler(0, 0, tilt);
-        tiltIndicatorImage.localScale = Mathf.Abs(tilt) > maxTilt * 0.7f ? Vector3.one * 1.2f : Vector3.one;
 
         Image indicatorImage = tiltIndicatorImage.GetComponent<Image>();
         if (indicatorImage)
