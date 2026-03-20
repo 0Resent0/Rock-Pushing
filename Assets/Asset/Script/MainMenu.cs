@@ -17,7 +17,10 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene("Setting");
     }
-
+    public void Shopping()
+    {
+        SceneManager.LoadScene("FakeShop");
+    }
     public void Upgrade()
     {
         SceneManager.LoadScene("Upgrade");
