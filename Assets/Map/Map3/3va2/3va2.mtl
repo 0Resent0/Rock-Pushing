@@ -1,0 +1,27 @@
+# Exported from Nomad Sculpt
+
+newmtl Road
+ map_Kd Road_color_1.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Field
+ map_Kd Field_color_1.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Ya1
+ map_Kd Ya1_color.png
+ map_d Ya1_opacity.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Ya2
+ map_Kd Ya2_color.png
+ map_d Ya2_opacity.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
