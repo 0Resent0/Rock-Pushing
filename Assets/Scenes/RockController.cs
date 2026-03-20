@@ -137,7 +137,8 @@ public class RockController : MonoBehaviour
     }
 
     void GameOver()
-    {
+    { ///Test Fix
+
         isGameOver = true;
         Debug.Log("Game Over!");
     }
