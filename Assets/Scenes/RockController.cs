@@ -9,6 +9,7 @@ public class RockController : MonoBehaviour
     [Header("Balance Settings")]
     public float maxTilt = 45f;
     public float smoothSpeed = 5f;
+    public float mouseTiltPower = 30f;
 
     [Header("Rock Behavior")]
     public float pullForce = 12f;
@@ -22,7 +23,6 @@ public class RockController : MonoBehaviour
     public float driftForce = 3f;
 
     [Header("Player Control")]
-    public float mouseTiltPower = 30f;
     public float controlPower = 80f;
     public float edgeMultiplier = 2f;
 
