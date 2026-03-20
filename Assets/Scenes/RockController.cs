@@ -4,131 +4,79 @@ using UnityEngine.UI;
 public class RockController : MonoBehaviour
 {
     [Header("Movement")]
-    public float moveSpeed = 5f;
+    public float moveSpeed = 5f;         // Forward movement speed
 
     [Header("Balance Settings")]
-    public float maxTilt = 55f;
-    public float smoothSpeed = 8f;
-    public float mouseTiltPower = 30f;
-    public bool easyMode = false;      // Q/P keys if true
-    public bool nightmareMode = false; // stronger instability
+    public float maxTilt = 45f;          // Max tilt before Game Over
+    public float smoothSpeed = 5f;       // Tilt smoothing speed
+    public float mouseTiltPower = 30f;   // How strongly mouse movement affects tilt
 
     [Header("Instability")]
-    public float randomForce = 10f;
-    public float randomSpeed = 1.5f;
-    public float spikeChance = 0.03f;  // old-style occasional nudge
-    public float driftForce = 1.5f;
-
-    [Header("Recovery")]
-    public float autoRecover = 2f;
+    public float randomForce = 20f;
+    public float randomSpeed = 2f;
+    public float spikeChance = 0.03f;
+    public float driftForce = 3f;
 
     [Header("UI")]
     public RectTransform tiltIndicatorImage;
-    public Color normalColor = Color.white;
-    public Color warningColor = Color.red;
-    [Range(0f, 1f)] public float warningThreshold = 0.8f;
 
     private float tilt = 0f;
     private float targetTilt = 0f;
     private bool isGameOver = false;
     private bool started = false;
 
-    public bool IsGameOver => isGameOver;
-
     void Update()
     {
         if (isGameOver) return;
 
-        // Start moving
+        // Start moving forward when W pressed
         if (Input.GetKey(KeyCode.W))
+        {
             started = true;
 
-        if (!started) return;
-
-        // Forward movement
-        if (Input.GetKey(KeyCode.W))
+            // Forward movement
             transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime, Space.World);
 
-        // Adjust parameters for Nightmare Mode
-        float actualRandomForce = randomForce;
-        float actualDriftForce = driftForce;
-        float actualSpikeChance = spikeChance;
+            // Add smooth random instability
+            float randomTilt = Mathf.PerlinNoise(Time.time * randomSpeed, 0f) - 0.5f;
+            targetTilt += randomTilt * randomForce * Time.deltaTime;
 
-        if (nightmareMode)
-        {
-            actualRandomForce *= 2f;
-            actualDriftForce *= 2f;
-            actualSpikeChance *= 2f;
-        }
-
-        // Instability while moving
-        if (Input.GetKey(KeyCode.W))
-        {
-            float randomTilt = (Mathf.PerlinNoise(Time.time * randomSpeed, 0f) - 0.5f) * actualRandomForce * Time.deltaTime;
-            targetTilt += randomTilt;
-
-            // OLD spike mechanic: nudge, does not instantly kill
-            if (Random.value < actualSpikeChance)
+            // Sudden spikes
+            if (Random.value < spikeChance)
             {
-                float spike = Mathf.Sign(Random.value - 0.5f) * actualRandomForce * 1.5f;
-                targetTilt += spike; // just moves tilt
-                // optional: you could play a "shake" effect or sound here
+                float spike = Random.Range(-1f, 1f) * randomForce * 2f;
+                targetTilt += spike;
             }
 
-            targetTilt += actualDriftForce * Time.deltaTime;
-
-            // Clamp slightly beyond maxTilt for spikes so they don't instantly kill
-            float dangerMax = maxTilt * (nightmareMode ? 1.5f : 1.2f);
-            targetTilt = Mathf.Clamp(targetTilt, -dangerMax, dangerMax);
+            // Constant drift
+            targetTilt += driftForce * Time.deltaTime;
         }
 
-        // Player control
-        float input = 0f;
-        if (easyMode)
+        // Mouse movement adds to tilt
+        if (started)
         {
-            if (Input.GetKey(KeyCode.Q)) input = 1f;
-            if (Input.GetKey(KeyCode.P)) input = -1f;
-        }
-        else
-        {
-            input = Input.GetAxisRaw("Mouse X");
+            float mouseDelta = Input.GetAxis("Mouse X");
+            targetTilt += -mouseDelta * mouseTiltPower * Time.deltaTime;
         }
 
-        targetTilt += -input * mouseTiltPower * Time.deltaTime;
-
-        // Auto recovery
-        targetTilt = Mathf.Lerp(targetTilt, 0f, autoRecover * Time.deltaTime);
-
-        // Smooth tilt
+        // Smooth tilt visually
         tilt = Mathf.Lerp(tilt, targetTilt, smoothSpeed * Time.deltaTime);
         transform.rotation = Quaternion.Euler(0, 0, tilt);
 
-        // Game Over check using actual tilt
+        // Check Game Over
         if (Mathf.Abs(tilt) >= maxTilt)
+        {
             GameOver();
+        }
 
-        // Update tilt indicator
+        // Update tilt indicator UI
         UpdateTiltIndicator();
     }
 
     void UpdateTiltIndicator()
     {
         if (!tiltIndicatorImage) return;
-
         tiltIndicatorImage.localRotation = Quaternion.Euler(0, 0, tilt);
-
-        float absTilt = Mathf.Abs(tilt);
-        if (absTilt >= maxTilt * warningThreshold)
-        {
-            float t = (absTilt - maxTilt * warningThreshold) / (maxTilt * (1 - warningThreshold));
-            tiltIndicatorImage.GetComponent<Image>().color = Color.Lerp(normalColor, warningColor, t);
-            tiltIndicatorImage.localScale = Vector3.one * (1f + 0.2f * t);
-        }
-        else
-        {
-            tiltIndicatorImage.GetComponent<Image>().color = normalColor;
-            tiltIndicatorImage.localScale = Vector3.one;
-        }
     }
 
     void GameOver()
