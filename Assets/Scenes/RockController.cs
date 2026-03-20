@@ -3,6 +3,9 @@ using UnityEngine.UI;
 
 public class RockController : MonoBehaviour
 {
+    [Header("Settings")]
+    public bool easyMode = true; // true = Q/P keys, false = mouse X axis
+
     [Header("Movement")]
     public float moveSpeed = 5f;
 
@@ -10,6 +13,7 @@ public class RockController : MonoBehaviour
     public float maxTilt = 45f;
     public float smoothSpeed = 5f;
     public float mouseTiltPower = 30f;
+    public float keyTiltPower = 40f;
 
     [Header("Rock Behavior")]
     public float pullForce = 12f;
@@ -21,10 +25,6 @@ public class RockController : MonoBehaviour
     public float randomSpeed = 2f;
     public float spikeChance = 0.03f;
     public float driftForce = 3f;
-
-    [Header("Player Control")]
-    public float controlPower = 80f;
-    public float edgeMultiplier = 2f;
 
     [Header("Recovery")]
     public float rockRestore = 0.5f;
@@ -41,7 +41,6 @@ public class RockController : MonoBehaviour
     private float loseDirection = 1f;
     private float switchTimer;
     private bool isGameOver = false;
-    private bool started = false;
 
     void Start()
     {
@@ -53,53 +52,64 @@ public class RockController : MonoBehaviour
     {
         if (isGameOver) return;
 
-        // Start moving when W is pressed
-        if (Input.GetKey(KeyCode.W))
+        // Rock tries to fall automatically
+        switchTimer -= Time.deltaTime;
+        if (switchTimer <= 0f)
         {
-            started = true;
-
-            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime, Space.World);
-
-            // Rock tries to fall
-            switchTimer -= Time.deltaTime;
-            if (switchTimer <= 0f)
-            {
-                loseDirection *= -1f;
-                switchTimer = switchTime;
-            }
-
-            float edgeFactor = Mathf.InverseLerp(0, maxTilt, Mathf.Abs(tilt));
-            float force = pullForce * (1f + edgeFactor * aggression);
-            targetTilt += loseDirection * force * Time.deltaTime;
-
-            if (Random.value < spikeChance)
-                targetTilt += loseDirection * force * 1.5f;
-
-            targetTilt += tilt * 0.2f * Time.deltaTime;
-
-            float randomTilt = Mathf.PerlinNoise(Time.time * randomSpeed, 0f) - 0.5f;
-            targetTilt += randomTilt * randomForce * Time.deltaTime;
-
-            if (Random.value < spikeChance)
-                targetTilt += Random.Range(-1f, 1f) * randomForce * 2f;
-
-            targetTilt += driftForce * Time.deltaTime;
-
-            float mouseDelta = Input.GetAxis("Mouse X");
-            targetTilt += -mouseDelta * controlPower * (1f + edgeFactor * edgeMultiplier) * Time.deltaTime;
-
-            if (rockRestore > 0f)
-                targetTilt = Mathf.Lerp(targetTilt, 0f, rockRestore * Time.deltaTime);
+            loseDirection *= -1f;
+            switchTimer = switchTime;
         }
-        else if (rockRestore > 0f)
-        {
+
+        float edgeFactor = Mathf.InverseLerp(0, maxTilt, Mathf.Abs(tilt));
+        float force = pullForce * (1f + edgeFactor * aggression);
+        targetTilt += loseDirection * force * Time.deltaTime;
+
+        // Random spike
+        if (Random.value < spikeChance)
+            targetTilt += loseDirection * force * 1.5f;
+
+        // Anti-recovery
+        targetTilt += tilt * 0.2f * Time.deltaTime;
+
+        // Smooth random instability
+        float randomTilt = Mathf.PerlinNoise(Time.time * randomSpeed, 0f) - 0.5f;
+        targetTilt += randomTilt * randomForce * Time.deltaTime;
+
+        // Sudden spikes
+        if (Random.value < spikeChance)
+            targetTilt += Random.Range(-1f, 1f) * randomForce * 2f;
+
+        // Constant drift
+        targetTilt += driftForce * Time.deltaTime;
+
+        // Recovery
+        if (rockRestore > 0f)
             targetTilt = Mathf.Lerp(targetTilt, 0f, rockRestore * Time.deltaTime);
+
+        // ✅ Player Control
+        float input = 0f;
+        if (easyMode)
+        {
+            // Q and P keys control tilt
+            if (Input.GetKey(KeyCode.Q)) input = 1f;
+            else if (Input.GetKey(KeyCode.P)) input = -1f;
+        }
+        else
+        {
+            // Mouse X-axis control
+            input = Input.GetAxis("Mouse X");
         }
 
+        // Apply input to target tilt
+        float controlPower = easyMode ? keyTiltPower : mouseTiltPower;
+        targetTilt += -input * controlPower * (1f + edgeFactor) * Time.deltaTime;
+
+        // Clamp and smooth tilt
         targetTilt = Mathf.Clamp(targetTilt, -maxTilt * 1.3f, maxTilt * 1.3f);
         tilt = Mathf.Lerp(tilt, targetTilt, smoothSpeed * Time.deltaTime);
         transform.rotation = Quaternion.Euler(0, 0, tilt);
 
+        // Check Game Over
         if (Mathf.Abs(tilt) >= maxTilt)
             GameOver();
 
