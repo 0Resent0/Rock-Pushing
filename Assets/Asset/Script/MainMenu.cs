@@ -26,4 +26,16 @@ public class MainMenu : MonoBehaviour
     {
         Application.Quit();
     }
+    public void Map1()
+    {
+        SceneManager.LoadScene("Map 1");
+    }
+    public void Map2()
+    {
+        SceneManager.LoadScene("Map 2");
+    }
+    public void Map3()
+    {
+        SceneManager.LoadScene("Map 3");
+    }
 }

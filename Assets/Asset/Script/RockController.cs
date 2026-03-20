@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class RockController : MonoBehaviour
 {
@@ -201,5 +202,6 @@ public class RockController : MonoBehaviour
     {
         isGameOver = true;
         Debug.Log("Game Over!");
+        SceneManager.LoadScene("Gameover");
     }
 }
