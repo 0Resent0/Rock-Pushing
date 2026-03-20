@@ -7,7 +7,7 @@ public class RockController : MonoBehaviour
     public bool easyMode = true; // true = Q/P keys, false = mouse X axis
 
     [Header("Movement")]
-    public float moveSpeed = 5f; // forward movement speed
+    public float moveSpeed = 5f;
 
     [Header("Balance Settings")]
     public float maxTilt = 45f;
@@ -41,7 +41,6 @@ public class RockController : MonoBehaviour
     private float loseDirection = 1f;
     private float switchTimer;
     private bool isGameOver = false;
-    private bool started = false; // true after pressing W
 
     void Start()
     {
@@ -53,31 +52,7 @@ public class RockController : MonoBehaviour
     {
         if (isGameOver) return;
 
-        // Only start tilting/moving after pressing W
-        if (!started)
-        {
-            if (Input.GetKey(KeyCode.W))
-            {
-                started = true; // start tilt & movement
-            }
-            else
-            {
-                // Keep rock completely upright and stable
-                tilt = 0f;
-                targetTilt = 0f;
-                transform.rotation = Quaternion.Euler(0, 0, tilt);
-                UpdateTiltIndicator();
-                return; // exit Update early
-            }
-        }
-
-        // Move forward only while W is pressed
-        if (Input.GetKey(KeyCode.W))
-        {
-            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime, Space.World);
-        }
-
-        // Automatic tilt logic
+        // Rock tries to fall automatically
         switchTimer -= Time.deltaTime;
         if (switchTimer <= 0f)
         {
@@ -89,34 +64,43 @@ public class RockController : MonoBehaviour
         float force = pullForce * (1f + edgeFactor * aggression);
         targetTilt += loseDirection * force * Time.deltaTime;
 
+        // Random spike
         if (Random.value < spikeChance)
             targetTilt += loseDirection * force * 1.5f;
 
+        // Anti-recovery
         targetTilt += tilt * 0.2f * Time.deltaTime;
 
+        // Smooth random instability
         float randomTilt = Mathf.PerlinNoise(Time.time * randomSpeed, 0f) - 0.5f;
         targetTilt += randomTilt * randomForce * Time.deltaTime;
 
+        // Sudden spikes
         if (Random.value < spikeChance)
             targetTilt += Random.Range(-1f, 1f) * randomForce * 2f;
 
+        // Constant drift
         targetTilt += driftForce * Time.deltaTime;
 
+        // Recovery
         if (rockRestore > 0f)
             targetTilt = Mathf.Lerp(targetTilt, 0f, rockRestore * Time.deltaTime);
 
-        // Player control
+        // ✅ Player Control
         float input = 0f;
         if (easyMode)
         {
+            // Q and P keys control tilt
             if (Input.GetKey(KeyCode.Q)) input = 1f;
             else if (Input.GetKey(KeyCode.P)) input = -1f;
         }
         else
         {
+            // Mouse X-axis control
             input = Input.GetAxis("Mouse X");
         }
 
+        // Apply input to target tilt
         float controlPower = easyMode ? keyTiltPower : mouseTiltPower;
         targetTilt += -input * controlPower * (1f + edgeFactor) * Time.deltaTime;
 
@@ -125,7 +109,7 @@ public class RockController : MonoBehaviour
         tilt = Mathf.Lerp(tilt, targetTilt, smoothSpeed * Time.deltaTime);
         transform.rotation = Quaternion.Euler(0, 0, tilt);
 
-        // Game Over
+        // Check Game Over
         if (Mathf.Abs(tilt) >= maxTilt)
             GameOver();
 
