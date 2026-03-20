@@ -1,0 +1,118 @@
+# Exported from Nomad Sculpt
+
+newmtl Quad_Sphere
+ map_Kd Quad_Sphere_color.png
+ map_d Quad_Sphere_opacity.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Quad_Sphere_1
+ map_Kd Quad_Sphere_color_1.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Mirror_2
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Mirror_3
+ map_Kd Mirror_3_color.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Mirror_4
+ map_Kd Mirror_4_color.png
+ map_d Mirror_4_opacity.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Mirror_5
+ map_Kd Mirror_5_color.png
+ map_d Mirror_5_opacity.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Mirror_6
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Mirror_7
+ map_Kd Mirror_7_color.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Mirror_8
+ map_Kd Mirror_8_color.png
+ map_d Mirror_8_opacity.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Mirror_9
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Quad_Sphere_2
+ map_Kd Quad_Sphere_2_color.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Mirror_10
+ map_Kd Mirror_10_color.png
+ map_d Mirror_10_opacity.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Mirror_11
+ map_Kd Mirror_11_color.png
+ map_d Mirror_11_opacity.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Quad_Sphere_3
+ map_Kd Quad_Sphere_3_color.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Tube
+ map_Kd Tube_color.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Tube_1
+ map_Kd Tube_color_1.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Tube_2
+ map_Kd Tube_color_2.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Tube_3
+ map_Kd Tube_color_3.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Tube_4
+ map_Kd Tube_color_4.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
