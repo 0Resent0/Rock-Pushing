@@ -4,12 +4,10 @@ using UnityEngine.UI;
 public class RockController : MonoBehaviour
 {
     [Header("Settings")]
-    public bool keyboardMode = true;   // ✅ renamed
-    public bool fatigueMode = true;    // ✅ NEW toggle
+    public bool keyboardMode = true; // true = Q/P keys, false = mouse X axis
 
     [Header("Movement")]
     public float moveSpeed = 5f;
-    public float rollSpeed = 200f;
 
     [Header("Balance Settings")]
     public float maxTilt = 45f;
@@ -31,27 +29,22 @@ public class RockController : MonoBehaviour
     [Header("Recovery")]
     public float rockRestore = 0.5f;
 
+    [Header("Fatigue System")]
+    public bool fatigueMode = true;     // true = control weakens if spammed
+    public float fatigueRate = 5f;      // how fast fatigue accumulates
+    public float fatigueRecover = 2f;   // how fast fatigue recovers
+    private float fatigueAmount = 0f;   // 0 = full control, 1 = no control
+
+    [Header("Stuck System")]
+    public float stuckChance = 0.05f;
+    public float unstuckThreshold = 3f;
+    public RectTransform stuckIndicator;
+    public Image stuckProgressBar;
+
     [Header("UI")]
     public RectTransform tiltIndicatorImage;
-
-    [Header("Tilt Indicator Settings")]
     [Range(0f, 1f)]
     public float colorChangePercent = 0.8f;
-
-    [Header("Advanced Control")]
-
-    [Header("Fatigue")]
-    public float fatigueIncrease = 2f;
-    public float fatigueRecovery = 1f;
-    public float maxFatigue = 1f;
-
-    [Header("Input Weight")]
-    public float inputSmoothTime = 0.15f;
-
-    private float fatigue = 0f;
-    private float currentInput = 0f;
-    private float inputVelocity = 0f;
-    private float lastRawInput = 0f;
 
     private float tilt = 0f;
     private float targetTilt = 0f;
@@ -59,10 +52,16 @@ public class RockController : MonoBehaviour
     private float switchTimer;
     private bool isGameOver = false;
 
+    private bool isStuck = false;
+    private float stuckProgress = 0f;
+
     void Start()
     {
         switchTimer = switchTime;
         loseDirection = Random.value > 0.5f ? 1f : -1f;
+        tilt = 0f;
+        targetTilt = 0f;
+        if (stuckIndicator) stuckIndicator.gameObject.SetActive(false);
     }
 
     void Update()
@@ -71,63 +70,55 @@ public class RockController : MonoBehaviour
 
         bool moving = Input.GetKey(KeyCode.Space);
 
-        // =========================
-        // 🎮 INPUT SYSTEM
-        // =========================
-
-        float rawInput = 0f;
-
-        if (keyboardMode) // ✅ renamed usage
+        // Random chance to get stuck while moving
+        if (moving && !isStuck)
         {
-            if (Input.GetKey(KeyCode.Q)) rawInput = 1f;
-            else if (Input.GetKey(KeyCode.P)) rawInput = -1f;
-        }
-        else
-        {
-            rawInput = Input.GetAxis("Mouse X");
-        }
-
-        // =========================
-        // 🧠 FATIGUE SYSTEM (toggleable)
-        // =========================
-
-        if (fatigueMode)
-        {
-            // Detect spam
-            if (Mathf.Sign(rawInput) != Mathf.Sign(lastRawInput) && Mathf.Abs(rawInput) > 0.5f)
+            if (Random.value < stuckChance * Time.deltaTime)
             {
-                fatigue += fatigueIncrease * Time.deltaTime;
+                isStuck = true;
+                stuckProgress = 0f;
+                if (stuckIndicator) stuckIndicator.gameObject.SetActive(true);
+            }
+        }
+
+        // Handle stuck mechanics
+        if (isStuck)
+        {
+            float input = 0f;
+            if (keyboardMode)
+            {
+                if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.P)) input = 1f;
+            }
+            else
+            {
+                input = Mathf.Abs(Input.GetAxis("Mouse X"));
             }
 
-            // Recover fatigue
-            fatigue -= fatigueRecovery * Time.deltaTime;
-            fatigue = Mathf.Clamp(fatigue, 0f, maxFatigue);
+            stuckProgress += input * Time.deltaTime * 10f;
+
+            if (stuckProgressBar)
+                stuckProgressBar.fillAmount = Mathf.Clamp01(stuckProgress / unstuckThreshold);
+
+            if (stuckProgress >= unstuckThreshold)
+            {
+                isStuck = false;
+                stuckProgress = 0f;
+                if (stuckIndicator) stuckIndicator.gameObject.SetActive(false);
+            }
+
+            // Apply fatigue when stuck
+            if (fatigueMode)
+            {
+                fatigueAmount = Mathf.Clamp01(fatigueAmount + input * Time.deltaTime * fatigueRate);
+            }
         }
-        else
-        {
-            fatigue = 0f; // no fatigue if disabled
-        }
 
-        lastRawInput = rawInput;
-
-        // =========================
-        // 🪨 INPUT WEIGHT
-        // =========================
-
-        currentInput = Mathf.SmoothDamp(currentInput, rawInput, ref inputVelocity, inputSmoothTime);
-
-        float fatigueMultiplier = 1f - fatigue;
-        float finalInput = currentInput * fatigueMultiplier;
-
-        // =========================
-        // 🪨 MOVEMENT + ROCK LOGIC
-        // =========================
-
-        if (moving)
+        // Movement and tilt only if not stuck
+        if (moving && !isStuck)
         {
             transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime, Space.World);
-            transform.Rotate(Vector3.right, rollSpeed * Time.deltaTime);
 
+            // Automatic tilt logic
             switchTimer -= Time.deltaTime;
             if (switchTimer <= 0f)
             {
@@ -152,28 +143,38 @@ public class RockController : MonoBehaviour
 
             targetTilt += driftForce * Time.deltaTime;
         }
+
+        // Smooth return to upright when not moving
+        if (!moving && rockRestore > 0f)
+            targetTilt = Mathf.Lerp(targetTilt, 0f, rockRestore * Time.deltaTime);
+
+        // Player input
+        float playerInput = 0f;
+        if (keyboardMode)
+        {
+            if (Input.GetKey(KeyCode.Q)) playerInput = 1f;
+            else if (Input.GetKey(KeyCode.P)) playerInput = -1f;
+        }
         else
         {
-            targetTilt = Mathf.Lerp(targetTilt, 0f, rockRestore * Time.deltaTime);
+            playerInput = Input.GetAxis("Mouse X");
         }
 
-        // =========================
-        // 🎯 APPLY CONTROL
-        // =========================
+        // Apply fatigue effect
+        if (fatigueMode)
+        {
+            fatigueAmount = Mathf.Clamp01(fatigueAmount - Time.deltaTime * fatigueRecover);
+            playerInput *= (1f - fatigueAmount);
+        }
 
         float controlPower = keyboardMode ? keyTiltPower : mouseTiltPower;
         float edgeFactorPlayer = Mathf.InverseLerp(0, maxTilt, Mathf.Abs(tilt));
+        targetTilt += -playerInput * controlPower * (1f + edgeFactorPlayer) * Time.deltaTime;
 
-        targetTilt += -finalInput * controlPower * (1f + edgeFactorPlayer) * Time.deltaTime;
-
-        // =========================
-        // 🎯 APPLY ROTATION
-        // =========================
-
+        // Clamp and smooth tilt
         targetTilt = Mathf.Clamp(targetTilt, -maxTilt * 1.3f, maxTilt * 1.3f);
         tilt = Mathf.Lerp(tilt, targetTilt, smoothSpeed * Time.deltaTime);
-
-        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, tilt);
+        transform.rotation = Quaternion.Euler(0, 0, tilt);
 
         if (Mathf.Abs(tilt) >= maxTilt)
             GameOver();
@@ -186,6 +187,7 @@ public class RockController : MonoBehaviour
         if (!tiltIndicatorImage) return;
 
         tiltIndicatorImage.localRotation = Quaternion.Euler(0, 0, tilt);
+        tiltIndicatorImage.localScale = Mathf.Abs(tilt) > maxTilt * 0.7f ? Vector3.one * 1.2f : Vector3.one;
 
         Image indicatorImage = tiltIndicatorImage.GetComponent<Image>();
         if (indicatorImage)
