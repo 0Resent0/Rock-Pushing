@@ -1,0 +1,7 @@
+# Exported from Nomad Sculpt
+
+newmtl Icosahedron
+ map_Kd Icosahedron_color.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
