@@ -21,6 +21,10 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene("FakeShop");
     }
+    public void Skin()
+    {
+        SceneManager.LoadScene("Skin");
+    }
     public void Upgrade()
     {
         SceneManager.LoadScene("Upgrade");

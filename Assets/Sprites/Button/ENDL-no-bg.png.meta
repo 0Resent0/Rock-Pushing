@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Sprites/Button/ENDL-no-bg.png.meta
 guid: 5514b30a8cb5dc0469b751ac82468008
+========
+guid: fce5547b821348d42a028c13fcb2e6e5
+>>>>>>>> Base:Assets/Sprites/ENDL-no-bg.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}

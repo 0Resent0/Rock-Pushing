@@ -704,10 +704,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _img: {fileID: 324733560}
-  _default: {fileID: 21300000, guid: 0fa347df91adc924ba12a96e015c7b72, type: 3}
-  _pressed: {fileID: 21300000, guid: b0cd56dd5d0d40247a22d58800b9b77e, type: 3}
-  _compressClip: {fileID: 8300000, guid: baf33c789b06f634b9ac92b2964b9934, type: 3}
-  _uncompressClip: {fileID: 8300000, guid: c122a50e13760d641843f24fb42385c8, type: 3}
+  _default: {fileID: 21300000, guid: 023210399852af84f8fd4819b37e1084, type: 3}
+  _pressed: {fileID: 21300000, guid: a2e4d21931b33b04080f6cde29ac40eb, type: 3}
+  _compressClip: {fileID: 0}
+  _uncompressClip: {fileID: 0}
   _source: {fileID: 324733557}
 --- !u!114 &324733560
 MonoBehaviour:
@@ -729,7 +729,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0fa347df91adc924ba12a96e015c7b72, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 023210399852af84f8fd4819b37e1084, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1439,8 +1439,8 @@ MonoBehaviour:
   _img: {fileID: 1527607102}
   _default: {fileID: 21300000, guid: f59e54cdcc2ed0446be1b7cebf9bea31, type: 3}
   _pressed: {fileID: 21300000, guid: 42f82482c5d53c346a4f5039d737413d, type: 3}
-  _compressClip: {fileID: 8300000, guid: baf33c789b06f634b9ac92b2964b9934, type: 3}
-  _uncompressClip: {fileID: 8300000, guid: c122a50e13760d641843f24fb42385c8, type: 3}
+  _compressClip: {fileID: 0}
+  _uncompressClip: {fileID: 0}
   _source: {fileID: 1527607105}
 --- !u!114 &1527607102
 MonoBehaviour:
@@ -1921,8 +1921,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _img: {fileID: 1726829352}
-  _default: {fileID: 21300000, guid: 5a07f2496386d2a49b556e62a9f057da, type: 3}
-  _pressed: {fileID: 21300000, guid: 61156841c2c57a04887d7da248400f41, type: 3}
+  _default: {fileID: 21300000, guid: fce5547b821348d42a028c13fcb2e6e5, type: 3}
+  _pressed: {fileID: 21300000, guid: fb359d89692239c4a984a7325f796549, type: 3}
   _compressClip: {fileID: 0}
   _uncompressClip: {fileID: 0}
   _source: {fileID: 0}
@@ -1969,19 +1969,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1726829352}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1601963334}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: Quit
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1726829352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2002,7 +1990,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5a07f2496386d2a49b556e62a9f057da, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fce5547b821348d42a028c13fcb2e6e5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2160,8 +2148,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _img: {fileID: 1819958580}
-  _default: {fileID: 21300000, guid: 6f0c57af27e176a4c83846a5e0853095, type: 3}
-  _pressed: {fileID: 21300000, guid: 7a98e32f15ffea547b2eca299111fa75, type: 3}
+  _default: {fileID: 21300000, guid: 3728df6f809866c4dafb6a9a5687ebf8, type: 3}
+  _pressed: {fileID: 21300000, guid: efaf752080c9fc0449d854c224a5a633, type: 3}
   _compressClip: {fileID: 0}
   _uncompressClip: {fileID: 0}
   _source: {fileID: 0}
@@ -2241,7 +2229,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6f0c57af27e176a4c83846a5e0853095, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3728df6f809866c4dafb6a9a5687ebf8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
