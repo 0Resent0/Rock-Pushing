@@ -25,6 +25,10 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene("Upgrade");
     }
+    public void NextUpgrade()
+    {
+        SceneManager.LoadScene("Upgrade2");
+    }
     public void Quit()
     {
         Application.Quit();
