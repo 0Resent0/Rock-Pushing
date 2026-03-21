@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections.Generic;
 
 public class TokenManager : MonoBehaviour
@@ -9,6 +10,9 @@ public class TokenManager : MonoBehaviour
     public List<SceneTokenConfig> sceneTokenConfigs = new List<SceneTokenConfig>();
 
     private Dictionary<string, int> tokensPerScene = new Dictionary<string, int>();
+
+    // Event to notify when tokens are updated
+    public event Action<int> OnTotalTokensUpdated; // total tokens across all scenes
 
     private void Awake()
     {
@@ -36,7 +40,21 @@ public class TokenManager : MonoBehaviour
 
         tokensPerScene[currentScene] += tokensToAward;
 
-        Debug.Log($"Awarded {tokensToAward} token(s) in scene '{currentScene}'. Total: {tokensPerScene[currentScene]}");
+        Debug.Log($"Awarded {tokensToAward} token(s) in scene '{currentScene}'. Total in scene: {tokensPerScene[currentScene]}");
+
+        // Notify listeners of the new total tokens
+        OnTotalTokensUpdated?.Invoke(TotalTokens);
+    }
+
+    public int TotalTokens
+    {
+        get
+        {
+            int total = 0;
+            foreach (var count in tokensPerScene.Values)
+                total += count;
+            return total;
+        }
     }
 
     public int GetTokensInScene(string sceneName)
@@ -48,5 +66,6 @@ public class TokenManager : MonoBehaviour
     public void ResetTokens()
     {
         tokensPerScene.Clear();
+        OnTotalTokensUpdated?.Invoke(0);
     }
 }
