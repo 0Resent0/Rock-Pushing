@@ -5,23 +5,29 @@ public class tpMapEnd : MonoBehaviour
     [SerializeField] private string nextSceneName;
     [SerializeField] private SceneFader fader;
 
-    private bool triggered = false; // Prevent multiple triggers
+    private bool triggered = false;
 
     private void OnTriggerEnter(Collider other)
     {
-        // Only trigger for the player
         if (triggered) return;
 
-        if (other.CompareTag("Player")) // Make sure your player has the "Player" tag
+        if (other.CompareTag("Player"))
         {
-            triggered = true;
-            Debug.Log("Player reached finish line!");
-
-            // Award token
-            TokenManager.Instance.AwardToken();
-
-            // Fade to next scene
-            fader.FadeToScene(nextSceneName);
+            TriggerFinish();
         }
+    }
+
+    public void TriggerFinish()
+    {
+        if (triggered) return;
+
+        triggered = true;
+        Debug.Log("Finish triggered!");
+
+        // ให้ Token
+        TokenManager.Instance.AwardToken();
+
+        // เปลี่ยนฉาก
+        fader.FadeToScene(nextSceneName);
     }
 }
