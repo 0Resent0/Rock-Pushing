@@ -202,6 +202,7 @@ GameObject:
   - component: {fileID: 780986783}
   - component: {fileID: 780986782}
   - component: {fileID: 780986781}
+  - component: {fileID: 780986785}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -295,6 +296,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &780986785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780986780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2c1aacfc7a870340a8639f3e84ee8f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &817274399
 GameObject:
   m_ObjectHideFlags: 0
@@ -857,7 +870,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 66, y: -43}
+  m_AnchoredPosition: {x: -9, y: -43}
   m_SizeDelta: {x: 416.4357, y: 34.1713}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1181772705
@@ -992,7 +1005,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -628, y: -23}
+  m_AnchoredPosition: {x: -358, y: -23}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1422318347
@@ -1078,7 +1091,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 75.36913, y: 0, z: -27.437256, w: 0}
+  m_margin: {x: 1.08218, y: 0, z: -27.437256, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1311,8 +1324,8 @@ MonoBehaviour:
   _img: {fileID: 1452238065}
   _default: {fileID: 21300000, guid: 5549a121a637bae469f365940cc1fdac, type: 3}
   _pressed: {fileID: 21300000, guid: b005548f19ee4ad4e827edea7c22724a, type: 3}
-  _compressClip: {fileID: 8300000, guid: baf33c789b06f634b9ac92b2964b9934, type: 3}
-  _uncompressClip: {fileID: 8300000, guid: c122a50e13760d641843f24fb42385c8, type: 3}
+  _compressClip: {fileID: 0}
+  _uncompressClip: {fileID: 0}
   _source: {fileID: 1452238062}
 --- !u!114 &1452238065
 MonoBehaviour:
@@ -1363,7 +1376,7 @@ PrefabInstance:
     - target: {fileID: 2554077776346503053, guid: ea3ef23f5c4ca35469584061ca0c40fb, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 780986785}
     - target: {fileID: 2554077776346503053, guid: ea3ef23f5c4ca35469584061ca0c40fb, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Back
