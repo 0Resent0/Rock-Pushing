@@ -399,7 +399,7 @@ MonoBehaviour:
   randomSpeed: 2
   spikeChance: 0.001
   driftForce: 3
-  rockRestore: 100
+  rockRestore: 0.5
   fatigueMode: 1
   fatigueRate: 5
   fatigueRecover: 2
