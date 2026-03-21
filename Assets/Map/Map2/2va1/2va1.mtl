@@ -1,0 +1,237 @@
+# Exported from Nomad Sculpt
+
+newmtl Box
+ map_Kd Box_color_1.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Box_1
+ map_Kd Box_color_2.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Box_1_1
+ map_Kd Box_1_color.png
+ map_roughness Box_1_roughness.png
+ map_Pr Box_1_roughness.png
+ map_metallic Box_1_metalness.png
+ map_Pm Box_1_metalness.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Tube
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Box_2
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Box_2_1
+ map_Kd Box_2_color.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Box_3
+ map_Kd Box_3_color_1.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Quad_Sphere
+ map_Kd Quad_Sphere_color.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Quad_Sphere_1
+ map_Kd Quad_Sphere_color_1.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Quad_Sphere_2
+ map_Kd Quad_Sphere_color_2.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Quad_Sphere_3
+ map_Kd Quad_Sphere_color_3.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Quad_Sphere_4
+ map_Kd Quad_Sphere_color_4.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Quad_Sphere_5
+ map_Kd Quad_Sphere_color_5.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Quad_Sphere_6
+ map_Kd Quad_Sphere_color_6.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Tube_1
+ map_Kd Tube_color.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Quad_Sphere_7
+ map_Kd Quad_Sphere_color_7.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Tube_2
+ map_Kd Tube_color_1.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Quad_Sphere_8
+ map_Kd Quad_Sphere_color_8.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Tube_3
+ map_Kd Tube_color_2.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Quad_Sphere_9
+ map_Kd Quad_Sphere_color_9.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Tube_4
+ map_Kd Tube_color_3.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Quad_Sphere_10
+ map_Kd Quad_Sphere_color_10.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Tube_5
+ map_Kd Tube_color_4.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Quad_Sphere_11
+ map_Kd Quad_Sphere_color_11.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Tube_6
+ map_Kd Tube_color_5.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Quad_Sphere_12
+ map_Kd Quad_Sphere_color_12.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Tube_7
+ map_Kd Tube_color_6.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Quad_Sphere_13
+ map_Kd Quad_Sphere_color_13.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Tube_8
+ map_Kd Tube_color_7.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Quad_Sphere_14
+ map_Kd Quad_Sphere_color_14.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Tube_9
+ map_Kd Tube_color_8.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Quad_Sphere_15
+ map_Kd Quad_Sphere_color_15.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Tube_10
+ map_Kd Tube_color_9.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Quad_Sphere_16
+ map_Kd Quad_Sphere_color_16.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Tube_11
+ map_Kd Tube_color_10.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Quad_Sphere_17
+ map_Kd Quad_Sphere_color_17.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Tube_12
+ map_Kd Tube_color_11.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Quad_Sphere_18
+ map_Kd Quad_Sphere_color_18.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Box_4
+ map_Kd Box_4_color_1.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
