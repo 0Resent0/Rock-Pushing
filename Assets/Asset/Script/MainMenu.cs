@@ -25,10 +25,6 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene("Upgrade");
     }
-    public void Credit()
-    {
-        SceneManager.LoadScene("Credit");
-    }
     public void Quit()
     {
         Application.Quit();
