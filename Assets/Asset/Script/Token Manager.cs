@@ -6,13 +6,9 @@ public class TokenManager : MonoBehaviour
 {
     public static TokenManager Instance;
 
-    [Header("Scene Token Settings")]
-    public List<SceneTokenConfig> sceneTokenConfigs = new List<SceneTokenConfig>();
-
     private Dictionary<string, int> tokensPerScene = new Dictionary<string, int>();
 
-    // Event to notify when tokens are updated
-    public event Action<int> OnTotalTokensUpdated; // total tokens across all scenes
+    public event Action<int> OnTotalTokensUpdated; // total tokens
 
     private void Awake()
     {
@@ -28,22 +24,15 @@ public class TokenManager : MonoBehaviour
 
     public void AwardToken()
     {
-        string currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        string scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
-        int tokensToAward = 1;
-        SceneTokenConfig config = sceneTokenConfigs.Find(c => c.sceneName == currentScene);
-        if (config != null)
-            tokensToAward = config.tokensToAward;
+        if (!tokensPerScene.ContainsKey(scene))
+            tokensPerScene[scene] = 0;
 
-        if (!tokensPerScene.ContainsKey(currentScene))
-            tokensPerScene[currentScene] = 0;
+        tokensPerScene[scene] += 1;
 
-        tokensPerScene[currentScene] += tokensToAward;
-
-        Debug.Log($"Awarded {tokensToAward} token(s) in scene '{currentScene}'. Total in scene: {tokensPerScene[currentScene]}");
-
-        // Notify listeners of the new total tokens
         OnTotalTokensUpdated?.Invoke(TotalTokens);
+        Debug.Log($"Awarded 1 token in {scene}. Total: {TotalTokens}");
     }
 
     public int TotalTokens
@@ -51,21 +40,28 @@ public class TokenManager : MonoBehaviour
         get
         {
             int total = 0;
-            foreach (var count in tokensPerScene.Values)
-                total += count;
+            foreach (var t in tokensPerScene.Values)
+                total += t;
             return total;
         }
     }
 
-    public int GetTokensInScene(string sceneName)
+    public bool SpendTokens(int amount)
     {
-        tokensPerScene.TryGetValue(sceneName, out int count);
-        return count;
-    }
+        if (TotalTokens < 1) return false;
 
-    public void ResetTokens()
-    {
-        tokensPerScene.Clear();
-        OnTotalTokensUpdated?.Invoke(0);
+        int remaining = amount;
+        List<string> keys = new List<string>(tokensPerScene.Keys);
+        foreach (var scene in keys)
+        {
+            if (remaining <= 0) break;
+            int available = tokensPerScene[scene];
+            int remove = Mathf.Min(available, remaining);
+            tokensPerScene[scene] -= remove;
+            remaining -= remove;
+        }
+
+        OnTotalTokensUpdated?.Invoke(TotalTokens);
+        return true;
     }
 }

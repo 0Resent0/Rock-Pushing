@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class RockController : MonoBehaviour
 {
     [Header("Settings")]
-    public bool keyboardMode = true; // true = Q/P keys, false = mouse X axis
+    public bool keyboardMode = true;
 
     [Header("Movement")]
     public float moveSpeed = 5f;
@@ -31,10 +31,10 @@ public class RockController : MonoBehaviour
     public float rockRestore = 0.5f;
 
     [Header("Fatigue System")]
-    public bool fatigueMode = true;     // true = control weakens if spammed
-    public float fatigueRate = 5f;      // how fast fatigue accumulates
-    public float fatigueRecover = 2f;   // how fast fatigue recovers
-    private float fatigueAmount = 0f;   // 0 = full control, 1 = no control
+    public bool fatigueMode = true;
+    public float fatigueRate = 5f;
+    public float fatigueRecover = 2f;
+    private float fatigueAmount = 0f;
 
     [Header("Stuck System")]
     public float stuckChance = 0.05f;
@@ -47,14 +47,27 @@ public class RockController : MonoBehaviour
     [Range(0f, 1f)]
     public float colorChangePercent = 0.8f;
 
+    // Internal state
     private float tilt = 0f;
     private float targetTilt = 0f;
     private float loseDirection = 1f;
     private float switchTimer;
     private bool isGameOver = false;
-
     private bool isStuck = false;
     private float stuckProgress = 0f;
+
+    // Base stats for upgrades
+    private float baseSpikeChance;
+    private float baseRandomForce;
+    private float baseRockRestore;
+
+    void Awake()
+    {
+        // Store base values so upgrades can reset
+        baseSpikeChance = spikeChance;
+        baseRandomForce = randomForce;
+        baseRockRestore = rockRestore;
+    }
 
     void Start()
     {
@@ -71,30 +84,17 @@ public class RockController : MonoBehaviour
 
         bool moving = Input.GetKey(KeyCode.Space);
 
-        // Random chance to get stuck while moving
-        if (moving && !isStuck)
+        // Stuck logic
+        if (moving && !isStuck && Random.value < stuckChance * Time.deltaTime)
         {
-            if (Random.value < stuckChance * Time.deltaTime)
-            {
-                isStuck = true;
-                stuckProgress = 0f;
-                if (stuckIndicator) stuckIndicator.gameObject.SetActive(true);
-            }
+            isStuck = true;
+            stuckProgress = 0f;
+            if (stuckIndicator) stuckIndicator.gameObject.SetActive(true);
         }
 
-        // Handle stuck mechanics
         if (isStuck)
         {
-            float input = 0f;
-            if (keyboardMode)
-            {
-                if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.P)) input = 1f;
-            }
-            else
-            {
-                input = Mathf.Abs(Input.GetAxis("Mouse X"));
-            }
-
+            float input = keyboardMode ? ((Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.P)) ? 1f : 0f) : Mathf.Abs(Input.GetAxis("Mouse X"));
             stuckProgress += input * Time.deltaTime * 10f;
 
             if (stuckProgressBar)
@@ -107,19 +107,16 @@ public class RockController : MonoBehaviour
                 if (stuckIndicator) stuckIndicator.gameObject.SetActive(false);
             }
 
-            // Apply fatigue when stuck
             if (fatigueMode)
-            {
                 fatigueAmount = Mathf.Clamp01(fatigueAmount + input * Time.deltaTime * fatigueRate);
-            }
         }
 
-        // Movement and tilt only if not stuck
+        // Movement logic
         if (moving && !isStuck)
         {
             transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime, Space.World);
 
-            // Automatic tilt logic
+            // Tilt
             switchTimer -= Time.deltaTime;
             if (switchTimer <= 0f)
             {
@@ -131,13 +128,10 @@ public class RockController : MonoBehaviour
             float force = pullForce * (1f + edgeFactor * aggression);
             targetTilt += loseDirection * force * Time.deltaTime;
 
-            if (Random.value < spikeChance)
-                targetTilt += loseDirection * force * 1.5f;
+            if (Random.value < spikeChance) targetTilt += loseDirection * force * 1.5f;
 
             targetTilt += tilt * 0.2f * Time.deltaTime;
-
-            float randomTilt = Mathf.PerlinNoise(Time.time * randomSpeed, 0f) - 0.5f;
-            targetTilt += randomTilt * randomForce * Time.deltaTime;
+            targetTilt += (Mathf.PerlinNoise(Time.time * randomSpeed, 0f) - 0.5f) * randomForce * Time.deltaTime;
 
             if (Random.value < spikeChance)
                 targetTilt += Random.Range(-1f, 1f) * randomForce * 2f;
@@ -145,23 +139,11 @@ public class RockController : MonoBehaviour
             targetTilt += driftForce * Time.deltaTime;
         }
 
-        // Smooth return to upright when not moving
         if (!moving && rockRestore > 0f)
             targetTilt = Mathf.Lerp(targetTilt, 0f, rockRestore * Time.deltaTime);
 
-        // Player input
-        float playerInput = 0f;
-        if (keyboardMode)
-        {
-            if (Input.GetKey(KeyCode.Q)) playerInput = 1f;
-            else if (Input.GetKey(KeyCode.P)) playerInput = -1f;
-        }
-        else
-        {
-            playerInput = Input.GetAxis("Mouse X");
-        }
+        float playerInput = keyboardMode ? (Input.GetKey(KeyCode.Q) ? 1f : Input.GetKey(KeyCode.P) ? -1f : 0f) : Input.GetAxis("Mouse X");
 
-        // Apply fatigue effect
         if (fatigueMode)
         {
             fatigueAmount = Mathf.Clamp01(fatigueAmount - Time.deltaTime * fatigueRecover);
@@ -172,7 +154,6 @@ public class RockController : MonoBehaviour
         float edgeFactorPlayer = Mathf.InverseLerp(0, maxTilt, Mathf.Abs(tilt));
         targetTilt += -playerInput * controlPower * (1f + edgeFactorPlayer) * Time.deltaTime;
 
-        // Clamp and smooth tilt
         targetTilt = Mathf.Clamp(targetTilt, -maxTilt * 1.3f, maxTilt * 1.3f);
         tilt = Mathf.Lerp(tilt, targetTilt, smoothSpeed * Time.deltaTime);
         transform.rotation = Quaternion.Euler(0, 0, tilt);
@@ -201,7 +182,14 @@ public class RockController : MonoBehaviour
     void GameOver()
     {
         isGameOver = true;
-        Debug.Log("Game Over!");
         SceneManager.LoadScene("Gameover");
+    }
+
+    // 🔹 Reset rock to base stats before applying upgrades
+    public void ResetToBase()
+    {
+        spikeChance = baseSpikeChance;
+        randomForce = baseRandomForce;
+        rockRestore = baseRockRestore;
     }
 }
