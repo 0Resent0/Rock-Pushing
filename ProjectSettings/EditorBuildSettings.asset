@@ -35,4 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Asset/Scene/Game/Map3 end.unity
     guid: 853febf06ac238042b732b7cc7650629
+  - enabled: 1
+    path: Assets/Asset/Scene/Menu/Gameover.unity
+    guid: f0adb554b19f579428e8f7d9188c4bfa
   m_configObjects: {}
