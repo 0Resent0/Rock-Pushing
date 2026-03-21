@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Asset/Scene/Menu/Upgrade.unity
     guid: 6c2c31fd282565044afa388318de0f4e
   - enabled: 1
+    path: Assets/Asset/Scene/Menu/Upgrade2.unity
+    guid: dc1bae6af36861e458c7df5682b07669
+  - enabled: 1
     path: Assets/Asset/FakeShop.unity
     guid: 6091f320b9aa2c44eb63c3ea14aed3bd
   - enabled: 1
