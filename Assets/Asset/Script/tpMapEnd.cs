@@ -1,20 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class tpMapEnd : MonoBehaviour
 {
-    public Collider otherCollider;
-    [SerializeField] string nextSceneName;
-    public SceneFader fader;
+    [SerializeField] private string nextSceneName;
+    [SerializeField] private SceneFader fader;
 
-    void Update()
+    private bool triggered = false; // Prevent multiple triggers
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (GetComponent<Collider>().bounds.Intersects(otherCollider.bounds))
-        {
-            Debug.Log("Collided!");
+        // Only trigger for the player
+        if (triggered) return;
 
+        if (other.CompareTag("Player")) // Make sure your player has the "Player" tag
+        {
+            triggered = true;
+            Debug.Log("Player reached finish line!");
+
+            // Award token
+            TokenManager.Instance.AwardToken();
+
+            // Fade to next scene
             fader.FadeToScene(nextSceneName);
         }
     }
