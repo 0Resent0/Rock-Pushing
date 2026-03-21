@@ -1,0 +1,19 @@
+# Exported from Nomad Sculpt
+
+newmtl Wood
+ map_Kd Wood_color.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Shirt
+ map_Kd Shirt_color.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Hat
+ map_Kd Hat_color.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
