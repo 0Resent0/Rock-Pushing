@@ -19,7 +19,7 @@ public class HoldTimer : MonoBehaviour
         }
 
         // แสดงค่า (ทศนิยม 1 ตำแหน่ง)
-        displayText.text = "m: " + m.ToString("F1");
+        displayText.text = m.ToString("F1") + "m";
 
         // ถ้าถึง 100 → สั่งจบ
         if (m >= Finish && !triggered)
