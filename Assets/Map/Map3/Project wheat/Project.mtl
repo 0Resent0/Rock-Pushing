@@ -1,0 +1,7 @@
+# Exported from Nomad Sculpt
+
+newmtl Tube
+ map_Kd Tube_color_17.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
