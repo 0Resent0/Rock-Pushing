@@ -3,7 +3,12 @@ guid: 309d230d536291c4e92fc276dd02e837
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Icosahedron
+    second: {fileID: 2100000, guid: e44bc74eb37848c4389cd89817bf4b03, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

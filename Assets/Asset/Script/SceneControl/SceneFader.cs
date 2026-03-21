@@ -8,6 +8,8 @@ public class SceneFader : MonoBehaviour
     public Image fadeImage;
     public float fadeDuration = 1f;
 
+    public AudioSource fadeSound;
+
     void Start()
     {
         
@@ -15,11 +17,15 @@ public class SceneFader : MonoBehaviour
 
     public void FadeToScene(string sceneName)
     {
+        fadeSound.Play();
+
         StartCoroutine(FadeOut(sceneName));
     }
 
     IEnumerator FadeIn()
     {
+        fadeSound.Play();
+
         float t = fadeDuration;
 
         while (t > 0)
@@ -33,6 +39,8 @@ public class SceneFader : MonoBehaviour
 
     IEnumerator FadeOut(string sceneName)
     {
+        fadeSound.Play();
+
         float t = 0;
 
         while (t < fadeDuration)
