@@ -27,6 +27,9 @@ EditorBuildSettings:
     path: Assets/Asset/FakeShop.unity
     guid: 6091f320b9aa2c44eb63c3ea14aed3bd
   - enabled: 1
+    path: Assets/Asset/Scene/Menu/Skin.unity
+    guid: 943568369c9d1d848bd9995757488e23
+  - enabled: 1
     path: Assets/Asset/Scene/Game/Map 1.unity
     guid: 42184561fd291404995dc90b90184022
   - enabled: 1

@@ -25,6 +25,10 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene("Upgrade");
     }
+    public void Skin()
+    {
+        SceneManager.LoadScene("Skin");
+    }
     public void Quit()
     {
         Application.Quit();
