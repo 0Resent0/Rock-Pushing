@@ -16,18 +16,19 @@ public class tpMapEnd : MonoBehaviour
             TriggerFinish();
         }
     }
-
     public void TriggerFinish()
     {
-        if (triggered) return;
-
         triggered = true;
         Debug.Log("Finish triggered!");
 
-        // ให้ Token
-        TokenManager.Instance.AwardToken();
+        if (GameManager.Instance != null)
+            GameManager.Instance.AddTokens(1);
+        else
+            Debug.LogWarning("GameManager instance not found!");
 
-        // เปลี่ยนฉาก
-        fader.FadeToScene(nextSceneName);
+        if (fader != null)
+            fader.FadeToScene(nextSceneName);
+        else
+            Debug.LogWarning("Fader not assigned!");
     }
 }
