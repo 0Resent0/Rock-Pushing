@@ -1,0 +1,7 @@
+# Exported from Nomad Sculpt
+
+newmtl Quad_Sphere
+ map_Kd Quad_Sphere_color_6.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000

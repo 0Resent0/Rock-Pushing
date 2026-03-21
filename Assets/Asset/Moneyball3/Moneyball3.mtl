@@ -1,0 +1,19 @@
+# Exported from Nomad Sculpt
+
+newmtl Box_1
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Quad_Sphere_1
+ map_Kd Quad_Sphere_1_color_1.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
+
+newmtl Tube
+ map_Kd Tube_color_2.png
+ map_d Tube_opacity_2.png
+ Kd 1.000000 1.000000 1.000000
+ Pr 0.250000
+ Pm 0.000000
