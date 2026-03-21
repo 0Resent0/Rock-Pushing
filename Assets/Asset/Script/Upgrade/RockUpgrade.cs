@@ -28,11 +28,13 @@ public class RockUpgradeSystem : MonoBehaviour
     public int GetStableLevel() => PlayerPrefs.GetInt(STABLE_KEY, 0);
     public int GetRecoveryLevel() => PlayerPrefs.GetInt(RECOVERY_KEY, 0);
     public int GetSpeedLevel() => PlayerPrefs.GetInt(SPEED_KEY, 0);
+    public int upgradeCost = 5;
 
     public void UpgradeStable()
     {
         int level = GetStableLevel();
-        if (level < maxLevel)
+
+        if (level < maxLevel && GameManager.Instance.SpendTokens(upgradeCost))
         {
             PlayerPrefs.SetInt(STABLE_KEY, level + 1);
             PlayerPrefs.Save();
@@ -44,6 +46,7 @@ public class RockUpgradeSystem : MonoBehaviour
         int level = GetRecoveryLevel();
         if (level < maxLevel)
         {
+            Debug.Log("Add ST");
             PlayerPrefs.SetInt(RECOVERY_KEY, level + 1);
             PlayerPrefs.Save();
         }
@@ -54,6 +57,7 @@ public class RockUpgradeSystem : MonoBehaviour
         int level = GetSpeedLevel();
         if (level < maxLevel)
         {
+            Debug.Log("Add SP");
             PlayerPrefs.SetInt(SPEED_KEY, level + 1);
             PlayerPrefs.Save();
         }

@@ -3,7 +3,7 @@
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-
+    private const string TOKEN_KEY = "TOKENS";
     private int tokens;
     private void Awake()
     {
@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            Load(); // ✅ ADD THIS
         }
         else
         {
@@ -21,26 +22,25 @@ public class GameManager : MonoBehaviour
 
     void Load()
     {
-        tokens = PlayerPrefs.GetInt("TOKENS", 0);
+        tokens = PlayerPrefs.GetInt(TOKEN_KEY, 0);
     }
 
     void Save()
     {
-        PlayerPrefs.SetInt("TOKENS", tokens);
+        PlayerPrefs.SetInt(TOKEN_KEY, tokens);
         PlayerPrefs.Save();
+    }
+
+    public void AddTokens(int amount)
+    {
+        tokens += amount;
+        Debug.Log("Tokens: " + tokens);
+        Save(); // ✅ better to reuse
     }
 
     public int GetTokens()
     {
         return tokens;
-    }
-
-    public void AddTokens(int amount)
-    {
-        tokens += amount;                  // ✅ increment tokens
-        Debug.Log("Tokens: " + tokens);
-        PlayerPrefs.SetInt("Tokens", tokens); // save persistently
-        PlayerPrefs.Save();
     }
 
     public bool SpendTokens(int amount)
