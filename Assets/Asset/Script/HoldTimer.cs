@@ -8,6 +8,7 @@ public class HoldTimer : MonoBehaviour
 
     public tpMapEnd mapEnd; // ลาก tpMapEnd มาใส่
     private bool triggered = false;
+    public float Finish;
 
     void Update()
     {
@@ -21,7 +22,7 @@ public class HoldTimer : MonoBehaviour
         displayText.text = "m: " + m.ToString("F1");
 
         // ถ้าถึง 100 → สั่งจบ
-        if (m >= 10f && !triggered)
+        if (m >= Finish && !triggered)
         {
             triggered = true;
             Debug.Log("Timer reached 100!");
