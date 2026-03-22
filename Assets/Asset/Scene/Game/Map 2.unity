@@ -5527,7 +5527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fd09359d097e4d41b1190e5786a2d4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: MainMenu
+  nextSceneName: Map2 end
   fader: {fileID: 1086648415}
 --- !u!65 &1808152441
 BoxCollider:

@@ -35,14 +35,14 @@ public class MainMenu : MonoBehaviour
     }
     public void Map1()
     {
-        SceneManager.LoadScene("Map 1");
+        SceneManager.LoadScene("Map1 start");
     }
     public void Map2()
     {
-        SceneManager.LoadScene("Map 2");
+        SceneManager.LoadScene("Map2 start");
     }
     public void Map3()
     {
-        SceneManager.LoadScene("Map 3");
+        SceneManager.LoadScene("Map3 start");
     }
 }
