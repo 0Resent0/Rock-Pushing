@@ -1002,7 +1002,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e77dbe8238976949b96e9f92e861294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tokenText: {fileID: 857194034}
 --- !u!1 &885198842
 GameObject:
   m_ObjectHideFlags: 0
@@ -1262,8 +1261,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 961692514}
-        m_TargetAssemblyTypeName: RockUpgradeManager, Assembly-CSharp
+      - m_Target: {fileID: 961692516}
+        m_TargetAssemblyTypeName: UpgradeUI, Assembly-CSharp
         m_MethodName: UpgradeRecovery
         m_Mode: 1
         m_Arguments:
@@ -1352,8 +1351,9 @@ GameObject:
   m_Component:
   - component: {fileID: 961692515}
   - component: {fileID: 961692514}
+  - component: {fileID: 961692516}
   m_Layer: 0
-  m_Name: Upgrade
+  m_Name: UpgradeUi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1371,10 +1371,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b1a6401322900d49b8ff06c758c682f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stabilizeLevel: 0
-  recoveryLevel: 0
-  stabilizeAmount: 0.05
-  recoveryAmount: 0.2
 --- !u!4 &961692515
 Transform:
   m_ObjectHideFlags: 0
@@ -1390,6 +1386,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &961692516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961692513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b74bca9ef2654d94bb19a4d334e8ba9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stableText: {fileID: 1700516172}
+  recoveryText: {fileID: 583108921}
 --- !u!1 &1029337799
 GameObject:
   m_ObjectHideFlags: 0
@@ -1557,6 +1567,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1043807257}
   m_CullTransparentMesh: 1
+--- !u!1 &1068553695
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1068553697}
+  - component: {fileID: 1068553696}
+  m_Layer: 0
+  m_Name: Token Sys
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1068553696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1068553695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d22877575f94dc4f8b14c62eec45c40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tokenText: {fileID: 857194034}
+--- !u!4 &1068553697
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1068553695}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 70.02826, y: 56.74698, z: -79.73812}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1093453037
 GameObject:
   m_ObjectHideFlags: 0
@@ -3140,9 +3195,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 961692514}
-        m_TargetAssemblyTypeName: RockUpgradeManager, Assembly-CSharp
-        m_MethodName: UpgradeStabilize
+      - m_Target: {fileID: 961692516}
+        m_TargetAssemblyTypeName: UpgradeUI, Assembly-CSharp
+        m_MethodName: UpgradeStable
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3229,3 +3284,4 @@ SceneRoots:
   - {fileID: 654565533}
   - {fileID: 1327601510}
   - {fileID: 961692515}
+  - {fileID: 1068553697}

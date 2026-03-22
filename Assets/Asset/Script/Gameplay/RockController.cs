@@ -63,8 +63,9 @@ public class RockController : MonoBehaviour
         tilt = 0f;
         targetTilt = 0f;
         if (stuckIndicator) stuckIndicator.gameObject.SetActive(false);
-    }
 
+        ApplyUpgrades(); // <-- apply upgrades on start
+    }
     void Update()
     {
         if (isGameOver) return;
@@ -196,6 +197,34 @@ public class RockController : MonoBehaviour
             float tiltPercent = Mathf.Abs(tilt) / maxTilt;
             indicatorImage.color = tiltPercent > colorChangePercent ? Color.red : Color.white;
         }
+    }
+   
+    public void ApplyUpgrades()
+    {
+        var upgradeSys = RockUpgradeSystem.Instance;
+        if (upgradeSys == null) return;
+
+        // Recovery upgrade: add 0.5 per level
+        float recoveryLevel = upgradeSys.GetRecoveryLevel();
+        rockRestore = 0.5f + 0.5f * recoveryLevel;
+
+        // Stable upgrade: reduce spike chance by a small percent per level
+        float stableLevel = upgradeSys.GetStableLevel();
+        // Reduce spikeChance, clamp so it never goes below a minimum (e.g., 0.01)
+        spikeChance = Mathf.Max(0.03f - 0.003f * stableLevel, 0.01f);
+
+        Debug.Log($"Applied Upgrades -> Recovery: {rockRestore}, SpikeChance: {spikeChance}");
+    }
+    public void UpgradeStable()
+    {
+        RockUpgradeSystem.Instance.UpgradeStable();
+        FindObjectOfType<RockController>()?.ApplyUpgrades();
+    }
+
+    public void UpgradeRecovery()
+    {
+        RockUpgradeSystem.Instance.UpgradeRecovery();
+        FindObjectOfType<RockController>()?.ApplyUpgrades();
     }
 
     void GameOver()
