@@ -16,7 +16,7 @@ public class GameOver : MonoBehaviour
         {
             Debug.LogWarning("Previous scene not found! Loading default scene.");
             SceneTracker.ResetTracker();
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("Ads 1");
         }
     }
 }

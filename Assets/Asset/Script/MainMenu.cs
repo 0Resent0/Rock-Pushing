@@ -11,7 +11,7 @@ public class MainMenu : MonoBehaviour
     }
     public void Back()
     {
-        SceneManager.LoadScene("Mainmenu");
+        SceneManager.LoadScene("Ads 1");
     }
     public void Setting()
     {

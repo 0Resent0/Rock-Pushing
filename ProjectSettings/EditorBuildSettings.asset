@@ -59,4 +59,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Asset/Scene/Game/Map3 start.unity
     guid: 9e20a80fc18ecc944b167af2c4880624
+  - enabled: 1
+    path: Assets/Asset/Scene/Ads/Ads 1.unity
+    guid: c9093dc81841b3c4f896b40a38f7eaa8
   m_configObjects: {}
