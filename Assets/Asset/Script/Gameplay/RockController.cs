@@ -211,7 +211,7 @@ public class RockController : MonoBehaviour
         // Stable upgrade: reduce spike chance by a small percent per level
         float stableLevel = upgradeSys.GetStableLevel();
         // Reduce spikeChance, clamp so it never goes below a minimum (e.g., 0.01)
-        spikeChance = Mathf.Max(0.001f - 0.003f * stableLevel, 0.01f);
+        spikeChance = Mathf.Max(0.001f - 0.005f * stableLevel, 0.001f);
 
         Debug.Log($"Applied Upgrades -> Recovery: {rockRestore}, SpikeChance: {spikeChance}");
     }
