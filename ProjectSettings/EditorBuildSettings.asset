@@ -62,4 +62,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Asset/Scene/Ads/Ads 1.unity
     guid: c9093dc81841b3c4f896b40a38f7eaa8
+  - enabled: 1
+    path: Assets/Asset/Scene/Menu/Credit.unity
+    guid: 10f571644326db540b96870a97a2018e
   m_configObjects: {}
